@@ -34,6 +34,12 @@ class Book(models.Model):
         """Returns the url to access a detail record for this book"""
         return reverse('book-detail', args=[str(self.id)])
 
+    def  display_genre(self):
+        """String representing the genre required for displaying it in the admin interface"""
+        return (', ').join([genre.name for genre in self.genre.all()[:3]])
+
+    display_genre.short_description = "Genre"
+
 class BookInstance(models.Model):
     """Model representing an instance of a book"""
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, help_text='Unique Id for this particular book across the whole library')
