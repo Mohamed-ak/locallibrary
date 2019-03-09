@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{% block title %}Local Library{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-2">
+                {% block sidebar %}
+                <ul class="sidebar-nav">
+                    <li><a href="{% url 'index' %}">Home</a></li>
+                    <li><a href="">All books</a></li>
+                    <li><a href="">All authors</a></li>
+                </ul>
+                {% endblock sidebar %}
+            </div>
+            <div class="col-sm-10">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+        <footer>
+            {% block footer %}
+            <p class="text-center bg-secondary text-white"><small>Copyright &copy;2019 , Developed by Mohamed AK</small></p>
+            {% endblock %}
+        </footer>
+    </div>
+</body>
+</html>
