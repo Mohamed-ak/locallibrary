@@ -1,10 +1,13 @@
 from django.db import models
-
+from django.contrib.auth.models import User
 # to get the absolute url for a detail record
 from django.urls import reverse 
 
 # required for unique book instances
 import uuid
+
+#utilities 
+from datetime import date
 
 
 class Genre(models.Model):
@@ -55,6 +58,7 @@ class BookInstance(models.Model):
     )
 
     status = models.CharField(max_length=1, choices=LOAN_STATUS, blank=True, default='m',help_text="Book availability")
+    borrower = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
 
     class Meta:
         ordering = ['due_back']
@@ -62,6 +66,10 @@ class BookInstance(models.Model):
     def __str__(self):
         """String representing the BookInstance object"""
         return f"{self.id} ({self.book.title})"
+    
+    @property
+    def is_overdue(self):
+        return self.due_back and date.today() > self.due_back
 
 
 class Author(models.Model):
