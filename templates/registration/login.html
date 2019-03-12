@@ -1,0 +1,42 @@
+{% extends 'base_generic.html' %}
+
+{% block title %}Local Library | Login{% endblock %}
+
+{% block content %}
+
+{% if form.errors %}
+<p>Your username and your password didn't match. Please try again.</p>
+{% endif %}
+
+{% if next %}
+
+{% if user.is_authenticated %}
+<p>Your account does not have access to this page. To proceed, please login with an account that has access.</p>
+{% else %}
+<p>Please login to see this page</p>
+{% endif %}
+
+{% endif %}
+
+<form class="form my-5" action="{% url 'login' %}" method="post">
+{% csrf_token %}
+<table>
+    <tr class="form-group">
+        <td>{{ form.username.label_tag }}</td>
+        <td>{{ form.username }}</td>
+    </tr>
+    <tr class="form-group">
+        <td>{{ form.password.label_tag }}</td>
+        <td>{{ form.password }}</td>
+    </tr>
+    <tr>
+        <td ><input type="submit" value="Login" class="btn btn-primary"></td>
+        <td>
+            <input type="hidden" name="next" value="{{ next }}">
+        </td>
+    </tr>
+</table>
+</form>
+<p><a href="{% url 'password_reset' %}">Forgot your password ?</a></p>
+
+{% endblock %}
